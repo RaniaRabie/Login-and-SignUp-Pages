@@ -108,27 +108,31 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
 
   // Menu items for dropdown with icons
   const MenuItems = () => (
-    
     <Box
       sx={{
         maxWidth: isIpad ? "none" : "none",
         display: "flex",
-        flexDirection: isMobile?"column" : "row",
-        gap: isIpad ? "0px" : "none", // Set gap between items based on device
+        flexDirection: isMobile || isIpad ? "column" : "row",
+        padding: isMobile || isIpad ? "5px" : "5px",
+        gap: isIpad ? "0px" : "5px", // Set gap between items based on device
+        borderRadius: "8px", // Rounded corners for mobile only
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Shadow for mobile only
+        backgroundColor: isMobile || isIpad ? "#f5f5f5" : "transparent",
       }}
     >
       {" "}
       <MenuItem onClick={handleMenuClose}>
         <Link
-          to="/"
+          to="/home"
           style={{
             textDecoration: "none",
-            color: isMobile || isIpad || isLandscape ? "#293241" : "white",
+            color: isMobile || isIpad ? "#293241" : "white",
             display: "flex",
             alignItems: "center",
+            fontWeight:"bold" 
           }}
         >
-          <HomeIcon style={{ marginRight: "3px", fontSize: 15 }} />
+          <HomeIcon style={{ marginRight: "3px", fontSize: 13 }} />
           Home
         </Link>
       </MenuItem>
@@ -137,12 +141,14 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
           to="/start"
           style={{
             textDecoration: "none",
-            color: isMobile || isIpad || isLandscape ? "#293241" : "white",
+            color: isMobile || isIpad ? "#293241" : "white",
             display: "flex",
             alignItems: "center",
+            fontWeight:"bold" 
+
           }}
         >
-          <StartIcon style={{ marginRight: "3px", fontSize: 15 }} />
+          <StartIcon style={{ marginRight: "3px", fontSize: 13 }} />
           Start here
         </Link>
       </MenuItem>
@@ -151,12 +157,14 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
           to="/service"
           style={{
             textDecoration: "none",
-            color: isMobile || isIpad || isLandscape ? "#293241" : "white",
+            color: isMobile || isIpad ? "#293241" : "white",
             display: "flex",
             alignItems: "center",
+            fontWeight:"bold" 
+
           }}
         >
-          <ServiceIcon style={{ marginRight: "3px", fontSize: 15 }} />
+          <ServiceIcon style={{ marginRight: "3px", fontSize: 13 }} />
           Service
         </Link>
       </MenuItem>
@@ -165,12 +173,14 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
           to="/about"
           style={{
             textDecoration: "none",
-            color: isMobile || isIpad || isLandscape ? "#293241" : "white",
+            color: isMobile || isIpad ? "#293241" : "white",
             display: "flex",
             alignItems: "center",
+            fontWeight:"bold" 
+
           }}
         >
-          <InfoIcon style={{ marginRight: "3px", fontSize: 15 }} />
+          <InfoIcon style={{ marginRight: "3px", fontSize: 13 }} />
           About us
         </Link>
       </MenuItem>
@@ -181,32 +191,33 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
     <AppBar
       position="absolute"
       open={open}
-      sx={{ zIndex: 0, backgroundColor: "#1d242f"  ,width:"100%" , left:0}}
+      sx={{ zIndex: 0, backgroundColor: "#1d242f", width: "100%", left: 0 }}
     >
-      <Toolbar sx={{ padding: isIpad || isLandscape ? "0" : "0"  , }}>
+      <Toolbar sx={{ padding: isIpad || isLandscape ? "0" : "0" }}>
         {" "}
         {/* Conditional padding for iPad */}
         <img
           src={logo}
           alt="Logo"
-          style={{ width: "150px", marginRight: "8px" , }} // Reduced logo margin
+          style={{ width: "150px", marginRight: "8px" }} // Reduced logo margin
         />
         <Box display="flex" justifyContent="center" flexGrow={1}>
-          <Stack direction="row" spacing={0}         // Set gap between items based on device
+          <Stack
+            direction="row"
+            spacing={0} // Set gap between items based on device
           >
             {" "}
-            {/* Decreased spacing */}{" "}
             {/* Dropdown menu for mobile and iPad screens */}
             {isMobile || isIpad || isLandscape ? (
               <>
-                <IconButton onClick={handleMenuClick} color="inherit" >
+                <IconButton onClick={handleMenuClick} color="inherit">
                   <MoreVertIcon /> {/* Dropdown icon */}
                 </IconButton>
                 <Menu
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
-                  sx={{flexDirection:"row"}}
+                  sx={{ flexDirection: "row" }}
                 >
                   <MenuItems /> {/* Render dropdown items */}
                 </Menu>
@@ -224,7 +235,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
         {/* Search component - hidden on mobile */}
         <Box
           display={{ xs: "none", sm: "flex", md: "flex" }}
-          alignItems="center" 
+          alignItems="center"
         >
           <Search
             sx={{
@@ -232,8 +243,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               height: "30px",
               backgroundColor: "#F5F5F5",
               color: "#293241",
-              width: isIpad ? "150px " : "150px !important"  // Adjust width for iPad mode
-
+              width: isIpad ? "150px " : "150px !important", // Adjust width for iPad mode
             }}
           >
             <SearchIconWrapper>
@@ -244,7 +254,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <IconButton onClick={toggleTheme} color="inherit"  >
+          <IconButton onClick={toggleTheme} color="inherit">
             {theme.palette.mode === "light" ? (
               <LightModeOutlinedIcon />
             ) : (
@@ -283,7 +293,6 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               width: "75px", // Reduced button width
               textTransform: "Capitalize",
               fontSize: "0.71rem", // Adjusted font size for smaller screens
-            
             }}
           >
             Sign up

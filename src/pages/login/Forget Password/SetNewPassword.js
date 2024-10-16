@@ -10,6 +10,8 @@ import {
   ListItem,
   IconButton,
   useMediaQuery,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
 import { useLocation } from "react-router-dom"; // useLocation بدلاً من useParams
 import EnhancedEncryptionIcon from "@mui/icons-material/EnhancedEncryption";
@@ -26,6 +28,7 @@ const SetNewPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false); // State for popup
 
   // استخدام useLocation للحصول على الـ query parameters
   const location = useLocation();
@@ -93,10 +96,17 @@ const SetNewPassword = () => {
           body: JSON.stringify(newPasswordData),
         }
       );
+      if (response.ok) {
+        setDialogOpen(true); // Open the popup when the form is submitted
 
+        // Simulate a waiting period (for example, after an API call)
+        setTimeout(() => {
+          setDialogOpen(false); // Close the popup after 3 seconds
+        }, 5000);
+      }
       if (response.ok) {
         const data = await response.json();
-        console.log("Password reset successful:", data);
+        console.log("Password Updated successful:", data);
         setSuccess(true);
       } else {
         const errorData = await response.json();
@@ -123,7 +133,7 @@ const SetNewPassword = () => {
     >
       <Typography
         variant="h5"
-        sx={{ margin: "5px 0", color: "#293241", fontWeight: "bold" }}
+        sx={{ margin: "8px 10px", color: "#293241", fontWeight: "bold" }}
       >
         Set New Password
       </Typography>
@@ -135,6 +145,7 @@ const SetNewPassword = () => {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
+          maxWidth: "400px", // Limit the width for better responsiveness
         }}
       >
         {/* Password field with tooltip */}
@@ -229,8 +240,6 @@ const SetNewPassword = () => {
             }}
           />
         </Tooltip>
-
-
 
         {/* Confirm Password field with tooltip */}
         <Tooltip
@@ -331,7 +340,7 @@ const SetNewPassword = () => {
               ),
             }}
           />
-        </Tooltip>
+        </Tooltip>
         <Button
           type="submit"
           variant="contained"
@@ -344,7 +353,6 @@ const SetNewPassword = () => {
             fontWeight: 600,
             letterSpacing: "0.5px",
             margin: "auto",
-            marginTop: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -358,6 +366,38 @@ const SetNewPassword = () => {
           Reset Password
         </Button>
       </form>
+      {/* Popup Dialog */}
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogContent
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              color: "#293241",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 10px rgba(34, 31, 31, 0.3)",
+              backgroundColor: "#f7f7f7",
+              borderRadius: "12px",
+              padding: "20px",
+              width: "320px",
+              height: "140px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            A password Updated successfully.
+          </Typography>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
