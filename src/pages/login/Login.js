@@ -63,7 +63,7 @@ const Login = () => {
     setEmail(newEmail);
 
     // Validate email and set error state
-    const emailPattern = /^[a-zA-Z0-9]{3,}(\.[a-zA-Z0-9]+)*@gmail\.com$/;// Simple email regex pattern
+    const emailPattern = /^[a-zA-Z0-9]{3,}(\.[a-zA-Z0-9]+)*@gmail\.com$/; // Simple email regex pattern
     const isValid = emailPattern.test(newEmail); // Check validity of new email
     setEmailError(!isValid);
 
@@ -232,20 +232,20 @@ const Login = () => {
       EmailOrUsername: data.email,
       password: data.password,
     };
-  
+
     console.log("LoginData being sent:", LoginData);
-  
+
     try {
       const response = await axios.post(
         "https://careerguidance.runasp.net/Auth/Login",
         LoginData,
         { headers: { "Content-Type": "application/json" } }
       );
-  
+
       // Store tokens in localStorage
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-  
+
       console.log("Login successful:", response.data);
     } catch (error) {
       if (error.response) {
@@ -339,18 +339,21 @@ const Login = () => {
     // Decode the credential token
     const credentialResponseDecoded = jwtDecode(response.credential);
     console.log(credentialResponseDecoded);
-  
+
     // Send the token to your API
     try {
-      const apiResponse = await axios.post('https://careerguidance.runasp.net/Auth/Google-Signin', {
-        token: response.credential,
-      });
+      const apiResponse = await axios.post(
+        "https://careerguidance.runasp.net/Auth/Google-Signin",
+        {
+          token: response.credential,
+        }
+      );
       console.log("API Response:", apiResponse.data);
       // Handle the API response as needed (e.g., store tokens, navigate, etc.)
     } catch (error) {
       console.error("API Call Failed:", error);
-    }
-  };
+    }
+  };
 
   const handleFailure = (error) => {
     console.error("Login Failed:", error);
@@ -376,7 +379,7 @@ const Login = () => {
 
           {/* Username or email field */}
           <TextField
-            {...register("email", { required: true })}
+            {...register("email", { required: true })}
             placeholder="Username or email"
             type="text"
             className="signInUser"
@@ -384,6 +387,22 @@ const Login = () => {
             required
             autoComplete="off"
             sx={{
+              
+              "& input:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                backgroundColor: "transparent",
+                WebkitTextFillColor: "#293241", // Maintain your desired text color
+                transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+
+              },
+              "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                {
+                  backgroundColor: "transparent", 
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                  transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+
+                },
+
               "& .MuiOutlinedInput-root": {
                 borderRadius: "25px",
                 width: "320px",
@@ -425,7 +444,7 @@ const Login = () => {
           />
           {/* Sign in Password field */}
           <TextField
-          {...register("password", { required: true })}
+            {...register("password", { required: true })}
             placeholder="Password"
             className="signInPass"
             type={showPassword ? "text" : "password"}
@@ -433,6 +452,8 @@ const Login = () => {
             onChange={(e) => setSignInPassword(e.target.value)}
             required
             sx={{
+              
+              
               "& .MuiOutlinedInput-root": {
                 borderRadius: "25px",
                 width: "320px",
@@ -595,6 +616,20 @@ const Login = () => {
                 autoComplete="off"
                 onBlur={handleUsernameBlur} // Hide tooltip on blur
                 sx={{
+                  "& input:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                backgroundColor: "transparent",
+                WebkitTextFillColor: "#293241", // Maintain your desired text color
+                transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+
+              },
+              "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                {
+                  backgroundColor: "transparent", 
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                  transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+
+                },
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "25px",
                     width: "320px",
@@ -679,6 +714,20 @@ const Login = () => {
                 onFocus={handleEmailFocus} // Show tooltip on focus
                 onBlur={handleEmailBlur} // Hide tooltip on blur
                 sx={{
+                  "& input:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                backgroundColor: "transparent",
+                WebkitTextFillColor: "#293241", // Maintain your desired text color
+                transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+
+              },
+              "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                {
+                  backgroundColor: "transparent", 
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                  transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+
+                },
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "25px",
                     width: "320px",

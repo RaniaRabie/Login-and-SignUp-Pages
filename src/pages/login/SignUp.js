@@ -143,7 +143,6 @@ const SignUp = () => {
     }
   };
   //////////////////////////////////////////////////////////////////////
- 
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -405,18 +404,21 @@ const SignUp = () => {
     // Decode the credential token
     const credentialResponseDecoded = jwtDecode(response.credential);
     console.log(credentialResponseDecoded);
-  
+
     // Send the token to your API
     try {
-      const apiResponse = await axios.post('https://careerguidance.runasp.net/Auth/Google-Signin', {
-        token: response.credential,
-      });
+      const apiResponse = await axios.post(
+        "https://careerguidance.runasp.net/Auth/Google-Signin",
+        {
+          token: response.credential,
+        }
+      );
       console.log("API Response:", apiResponse.data);
       // Handle the API response as needed (e.g., store tokens, navigate, etc.)
     } catch (error) {
       console.error("API Call Failed:", error);
-    }
-  };
+    }
+  };
 
   const handleFailure = (error) => {
     console.error("Login Failed:", error);
@@ -445,6 +447,18 @@ const SignUp = () => {
               onBlur={handleUsernameBlur} // Hide tooltip on blur
               autoComplete="off"
               sx={{
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                  backgroundColor: "transparent",
+                  WebkitTextFillColor: "#293241", // Maintain your desired text color
+                  transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+                },
+                "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                  {
+                    backgroundColor: "transparent",
+                    WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                    transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+                  },
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "25px",
                   width: "320px",
@@ -495,7 +509,7 @@ const SignUp = () => {
                   ? "Username must be at least 3 letters, 2 numbers and contain only letters and numbers."
                   : ""
               }
-              placement={isMobilee || isLandscape ? "bottom" : "right-start"} // Conditionally set the placement
+              placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
               open={usernameTooltipOpen} // Control tooltip visibility for username
               arrow
               PopperProps={{
@@ -511,7 +525,7 @@ const SignUp = () => {
                   {
                     name: "offset",
                     options: {
-                      offset: isMobilee || isLandscape ? [-100, 10] : [10, -5], // Larger vertical offset for mobile mode
+                      offset: isMobilee ? [-100, 10] : [5, 315], // Larger vertical offset for mobile mode
                     },
                   },
                 ],
@@ -531,6 +545,18 @@ const SignUp = () => {
               onBlur={handleEmailBlur} // Hide tooltip on blur
               autoComplete="off"
               sx={{
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                  backgroundColor: "transparent",
+                  WebkitTextFillColor: "#293241", // Maintain your desired text color
+                  transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+                },
+                "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                  {
+                    backgroundColor: "transparent",
+                    WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                    transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+                  },
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "25px",
                   width: "320px",
@@ -577,7 +603,7 @@ const SignUp = () => {
 
             <Tooltip
               title="Please enter a valid email"
-              placement={isMobilee || isLandscape ? "bottom" : "right-start"} // Conditionally set the placement
+              placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
               open={emailTooltipOpen}
               arrow
               PopperProps={{
@@ -593,7 +619,7 @@ const SignUp = () => {
                   {
                     name: "offset",
                     options: {
-                      offset: isMobilee || isLandscape ? [-220, 38] : [20, -5], // Larger vertical offset for mobile mode
+                      offset: isMobilee ? [-220, 38] : [18, 315], // Larger vertical offset for mobile mode
                     },
                   },
                 ],
@@ -631,14 +657,14 @@ const SignUp = () => {
               </Box>
             }
             open={tooltipOpen && validationCriteria.some((item) => !item.valid)} // Keep tooltip open if some criteria are not met
-            placement={isMobilee || isLandscape ? "bottom" : "right-start"}
+            placement={isMobilee ? "bottom" : "left-start"}
             arrow
             PopperProps={{
               modifiers: [
                 {
                   name: "offset",
                   options: {
-                    offset: isMobilee || isLandscape ? [0, -5] : [0, -8], // Larger vertical offset for mobile mode
+                    offset: isMobilee ? [0, -5] : [0, -5], // Larger vertical offset for mobile mode
                   },
                 },
               ],
@@ -741,13 +767,13 @@ const SignUp = () => {
               ConfirmValidationCriteria.some((item) => !item.valid)
             } // Keep tooltip open if some criteria are not met
             arrow
-            placement={isMobilee || isLandscape ? "bottom" : "right-start"} // Conditionally set the placement
+            placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
             PopperProps={{
               modifiers: [
                 {
                   name: "offset",
                   options: {
-                    offset: isMobilee || isLandscape ? [0, -18] : [10, -5], // Larger vertical offset for mobile mode
+                    offset: isMobilee ? [0, -18] : [10, -5], // Larger vertical offset for mobile mode
                   },
                 },
               ],
@@ -867,6 +893,18 @@ const SignUp = () => {
             required
             autoComplete="off"
             sx={{
+              "& input:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                backgroundColor: "transparent",
+                WebkitTextFillColor: "#293241", // Maintain your desired text color
+                transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+              },
+              "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                {
+                  backgroundColor: "transparent",
+                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                  transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+                },
               "& .MuiOutlinedInput-root": {
                 borderRadius: "25px",
                 width: "320px",
