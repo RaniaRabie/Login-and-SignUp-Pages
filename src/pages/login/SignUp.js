@@ -430,21 +430,468 @@ const SignUp = () => {
   };
 
   return (
-    <div className={`container ${isActive ? "active" : ""}`} id="container">
-      <div className="form-container sign-in Formm">
-        <form onSubmit={handleSignUpSubmit} className="Formm">
-          <h1 style={{ color: "#293241", marginBottom: 13 }}>Create Account</h1>
-          {/* Username field */}
-          <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+    <div className="biggerContainer">
+      <div className={`container ${isActive ? "active" : ""}`} id="container"  style={{marginTop:"0px"}}>
+        <div className="form-container sign-in Formm">
+          <form onSubmit={handleSignUpSubmit} className="Formm">
+            <h1 style={{ color: "#293241", marginBottom: 13 }}>Create Account</h1>
+            {/* Username field */}
+            <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+              <TextField
+                name="username"
+                placeholder="Username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                error={!isValidUsername} // Show error when username is invalid
+                onFocus={handleUsernameFocus} // Show tooltip on focus
+                onBlur={handleUsernameBlur} // Hide tooltip on blur
+                autoComplete="off"
+                sx={{
+                  "& input:-webkit-autofill": {
+                    WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                    backgroundColor: "transparent",
+                    WebkitTextFillColor: "#293241", // Maintain your desired text color
+                    transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+                  },
+                  "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                    {
+                      backgroundColor: "transparent",
+                      WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                      transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+                    },
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "25px",
+                    width: "320px",
+                    height: "37px",
+                    margin: "0", // Remove default margin from TextField
+                    border: "1px solid gray",
+                    "& fieldset": {
+                      border: "none", // Remove the default border
+                    },
+                  },
+                  "& .MuiInputBase-root": {
+                    "&.Mui-focused": {
+                      borderColor: "gray", // Remove focus color
+                    },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "2px solid #ee6c4d",
+                          borderLeft: "none",
+                          borderTop: "none",
+                          borderBottom: "none",
+                          borderRadius: "10px 0 0 10px",
+                        }}
+                      >
+                        <PersonIcon
+                          style={{
+                            color: "#ee6c4d",
+                            fontSize: 30,
+                            marginRight: 5,
+                          }}
+                        />
+                      </div>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+      
+              <Tooltip
+                title={
+                  !isValidUsername
+                    ? "Username must be at least 3 letters, 2 numbers and contain only letters and numbers."
+                    : ""
+                }
+                placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
+                open={usernameTooltipOpen} // Control tooltip visibility for username
+                arrow
+                PopperProps={{
+                  sx: {
+                    "& .MuiTooltip-tooltip": {
+                      backgroundColor: "#f5f5f5", // Set your desired background color here
+                      color: "#ee6c4d", // Optional: Set text color for better visibility
+                      textTransform: "bold",
+                      fontSize: 13,
+                    },
+                  },
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: isMobilee ? [-100, 10] : [5, 315], // Larger vertical offset for mobile mode
+                      },
+                    },
+                  ],
+                }}
+              />
+            </Box>
+            {/* Email field */}
+            <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+              <TextField
+                name="email"
+                placeholder="Email"
+                type="email"
+                error={emailError} // Control error state
+                value={email}
+                onChange={handleEmailChange}
+                onFocus={handleEmailFocus} // Show tooltip on focus
+                onBlur={handleEmailBlur} // Hide tooltip on blur
+                autoComplete="off"
+                sx={{
+                  "& input:-webkit-autofill": {
+                    WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
+                    backgroundColor: "transparent",
+                    WebkitTextFillColor: "#293241", // Maintain your desired text color
+                    transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
+                  },
+                  "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
+                    {
+                      backgroundColor: "transparent",
+                      WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
+                      transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
+                    },
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "25px",
+                    width: "320px",
+                    height: "37px",
+                    margin: "10px 0",
+                    border: "1px solid gray",
+                    "& fieldset": {
+                      border: "none", // Remove the default border
+                    },
+                  },
+                  "& .MuiInputBase-root": {
+                    "&.Mui-focused": {
+                      borderColor: "gray", // Remove focus color
+                    },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "2px solid #ee6c4d",
+                          borderLeft: "none",
+                          borderTop: "none",
+                          borderBottom: "none",
+                          borderRadius: "10px 0 0 10px",
+                        }}
+                      >
+                        <EmailIcon
+                          style={{
+                            color: "#ee6c4d",
+                            fontSize: 30,
+                            marginRight: 5,
+                          }}
+                        />
+                      </div>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+      
+              <Tooltip
+                title="Please enter a valid email"
+                placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
+                open={emailTooltipOpen}
+                arrow
+                PopperProps={{
+                  sx: {
+                    "& .MuiTooltip-tooltip": {
+                      backgroundColor: "#f5f5f5",
+                      color: "#ee6c4d",
+                      textTransform: "bold",
+                      fontSize: 13,
+                    },
+                  },
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: isMobilee ? [-220, 38] : [18, 315], // Larger vertical offset for mobile mode
+                      },
+                    },
+                  ],
+                }}
+              />
+            </Box>
+            {/* sign up Password field with tooltip */}
+            <Tooltip
+              title={
+                <Box sx={{ width: 180 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: 13, fontWeight: "bold", color: "#293241" }}
+                  >
+                    Password Requirements:
+                  </Typography>
+                  <List>
+                    {validationCriteria.map((item, index) => (
+                      <ListItem key={index} sx={{ padding: 0, margin: 0 }}>
+                        <Typography
+                          color={item.valid ? "green" : "red"}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "10px",
+                            margin: 0,
+                            padding: 0,
+                          }}
+                        >
+                          {item.valid ? "✔" : "✖"} {item.label}
+                        </Typography>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              }
+              open={tooltipOpen && validationCriteria.some((item) => !item.valid)} // Keep tooltip open if some criteria are not met
+              placement={isMobilee ? "bottom" : "left-start"}
+              arrow
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: isMobilee ? [0, -5] : [0, -5], // Larger vertical offset for mobile mode
+                    },
+                  },
+                ],
+                sx: {
+                  "& .MuiTooltip-tooltip": {
+                    backgroundColor: "#f5f5f5",
+                    color: "#293241",
+                  },
+                },
+              }}
+            >
+              <TextField
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+                name="signUpPassword"
+                value={signUpPassword}
+                onChange={(e) => {
+                  setSignUpPassword(e.target.value);
+                  setTooltipOpen(true); // Show tooltip while typing
+                }}
+                onBlur={() => {
+                  setTooltipOpen(false); // Hide it when password is fully valid
+                }}
+                onFocus={() => {
+                  setTooltipOpen(true); // Hide it when password is fully valid
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "25px",
+                    width: "320px",
+                    height: "37px",
+                    border: "1px solid gray",
+                    "& fieldset": { border: "none" },
+                  },
+                  "& .MuiInputBase-root": {
+                    "&.Mui-focused": { borderColor: "gray" },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "2px solid #ee6c4d",
+                          borderLeft: "none",
+                          borderTop: "none",
+                          borderBottom: "none",
+                          borderRadius: "10px 0 0 10px",
+                        }}
+                      >
+                        <LockIcon
+                          style={{
+                            color: "#ee6c4d",
+                            fontSize: 30,
+                            marginRight: 5,
+                          }}
+                        />
+                      </div>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Tooltip>
+      
+            {/* Confirm Password field with tooltip */}
+            <Tooltip
+              title={
+                <Box sx={{ width: 180 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: 13, fontWeight: "bold", color: "#293241" }}
+                  >
+                    Password Requirements:
+                  </Typography>
+                  <List>
+                    {ConfirmValidationCriteria.map((item, index) => (
+                      <ListItem key={index} sx={{ padding: 0, margin: 0 }}>
+                        <Typography
+                          color={item.valid ? "green" : "red"}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "10px",
+                            margin: 0,
+                            padding: 0,
+                          }}
+                        >
+                          {item.valid ? "✔" : "✖"} {item.label}
+                        </Typography>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              }
+              open={
+                ConfirmtooltipOpen &&
+                ConfirmValidationCriteria.some((item) => !item.valid)
+              } // Keep tooltip open if some criteria are not met
+              arrow
+              placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: isMobilee ? [0, -18] : [10, -5], // Larger vertical offset for mobile mode
+                    },
+                  },
+                ],
+                sx: {
+                  "& .MuiTooltip-tooltip": {
+                    backgroundColor: "#f5f5f5", // Set your desired background color here
+                    color: "#293241", // Optional: Set text color for better visibility
+                  },
+                },
+              }}
+            >
+              <TextField
+                placeholder="Confirm Password"
+                type={showPassword ? "text" : "password"}
+                value={confirmPassword}
+                name="confirmPassword"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                onFocus={() => setConfirmTooltipOpen(true)} // Show tooltip on focus
+                onBlur={() => setConfirmTooltipOpen(false)} // Hide tooltip on blur
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "25px",
+                    width: "320px",
+                    height: "37px",
+                    margin: "10px 0",
+                    border: "1px solid gray",
+                    "& fieldset": { border: "none" },
+                  },
+                  "& .MuiInputBase-root": {
+                    "&.Mui-focused": { borderColor: "gray" },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "2px solid #ee6c4d",
+                          borderLeft: "none",
+                          borderTop: "none",
+                          borderBottom: "none",
+                          borderRadius: "10px 0 0 10px",
+                        }}
+                      >
+                        <EnhancedEncryptionIcon
+                          style={{
+                            color: "#ee6c4d",
+                            fontSize: 30,
+                            marginRight: 5,
+                          }}
+                        />
+                      </div>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleToggleShowPassword}
+                        edge="end"
+                        style={{ color: "gray" }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Tooltip>
+            <button
+              type="submit"
+              className="btn"
+              style={{ textTransform: "capitalize" }}
+            >
+              Sign Up
+            </button>
+      
+            {/* Continue with Google button */}
+            <Stack
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              direction="row"
+            >
+              <div
+                style={{
+                  border: "1px solid rgba(34, 60, 84, 0.397)",
+                  width: 140,
+                  margin: 10,
+                }}
+              ></div>
+              <span style={{ color: "#293241", fontWeight: "bold" }}> OR </span>
+              <div
+                style={{
+                  border: "1px solid rgba(34, 60, 84, 0.397)",
+                  width: 140,
+                  margin: 10,
+                }}
+              ></div>
+            </Stack>
+            <GoogleLogin onSuccess={handleSuccess} onError={handleFailure} />
+          </form>
+          {/* end of sign up form  */}
+        </div>
+        <div className="form-container sign-up">
+          <form onSubmit={handleSubmit(onSubmit2)}>
+            <h1 style={{ color: "#293241" }}>Sign In</h1>
+      
+            {/* Username or email field */}
             <TextField
-              name="username"
-              placeholder="Username"
+              {...register("email", { required: true })} // Use the register method here
+              placeholder="Username or email"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              error={!isValidUsername} // Show error when username is invalid
-              onFocus={handleUsernameFocus} // Show tooltip on focus
-              onBlur={handleUsernameBlur} // Hide tooltip on blur
+              onChange={(e) => setEmail(e.target.value)}
+              required
               autoComplete="off"
               sx={{
                 "& input:-webkit-autofill": {
@@ -463,7 +910,7 @@ const SignUp = () => {
                   borderRadius: "25px",
                   width: "320px",
                   height: "37px",
-                  margin: "0", // Remove default margin from TextField
+                  margin: "15px 0",
                   border: "1px solid gray",
                   "& fieldset": {
                     border: "none", // Remove the default border
@@ -491,206 +938,21 @@ const SignUp = () => {
                       }}
                     >
                       <PersonIcon
-                        style={{
-                          color: "#ee6c4d",
-                          fontSize: 30,
-                          marginRight: 5,
-                        }}
+                        style={{ color: "#ee6c4d", fontSize: 30, marginRight: 5 }}
                       />
                     </div>
                   </InputAdornment>
                 ),
               }}
             />
-
-            <Tooltip
-              title={
-                !isValidUsername
-                  ? "Username must be at least 3 letters, 2 numbers and contain only letters and numbers."
-                  : ""
-              }
-              placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
-              open={usernameTooltipOpen} // Control tooltip visibility for username
-              arrow
-              PopperProps={{
-                sx: {
-                  "& .MuiTooltip-tooltip": {
-                    backgroundColor: "#f5f5f5", // Set your desired background color here
-                    color: "#ee6c4d", // Optional: Set text color for better visibility
-                    textTransform: "bold",
-                    fontSize: 13,
-                  },
-                },
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: isMobilee ? [-100, 10] : [5, 315], // Larger vertical offset for mobile mode
-                    },
-                  },
-                ],
-              }}
-            />
-          </Box>
-          {/* Email field */}
-          <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+            {/* Sign in Password field */}
             <TextField
-              name="email"
-              placeholder="Email"
-              type="email"
-              error={emailError} // Control error state
-              value={email}
-              onChange={handleEmailChange}
-              onFocus={handleEmailFocus} // Show tooltip on focus
-              onBlur={handleEmailBlur} // Hide tooltip on blur
-              autoComplete="off"
-              sx={{
-                "& input:-webkit-autofill": {
-                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
-                  backgroundColor: "transparent",
-                  WebkitTextFillColor: "#293241", // Maintain your desired text color
-                  transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
-                },
-                "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
-                  {
-                    backgroundColor: "transparent",
-                    WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
-                    transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
-                  },
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: "25px",
-                  width: "320px",
-                  height: "37px",
-                  margin: "10px 0",
-                  border: "1px solid gray",
-                  "& fieldset": {
-                    border: "none", // Remove the default border
-                  },
-                },
-                "& .MuiInputBase-root": {
-                  "&.Mui-focused": {
-                    borderColor: "gray", // Remove focus color
-                  },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        border: "2px solid #ee6c4d",
-                        borderLeft: "none",
-                        borderTop: "none",
-                        borderBottom: "none",
-                        borderRadius: "10px 0 0 10px",
-                      }}
-                    >
-                      <EmailIcon
-                        style={{
-                          color: "#ee6c4d",
-                          fontSize: 30,
-                          marginRight: 5,
-                        }}
-                      />
-                    </div>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <Tooltip
-              title="Please enter a valid email"
-              placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
-              open={emailTooltipOpen}
-              arrow
-              PopperProps={{
-                sx: {
-                  "& .MuiTooltip-tooltip": {
-                    backgroundColor: "#f5f5f5",
-                    color: "#ee6c4d",
-                    textTransform: "bold",
-                    fontSize: 13,
-                  },
-                },
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: isMobilee ? [-220, 38] : [18, 315], // Larger vertical offset for mobile mode
-                    },
-                  },
-                ],
-              }}
-            />
-          </Box>
-          {/* sign up Password field with tooltip */}
-          <Tooltip
-            title={
-              <Box sx={{ width: 180 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontSize: 13, fontWeight: "bold", color: "#293241" }}
-                >
-                  Password Requirements:
-                </Typography>
-                <List>
-                  {validationCriteria.map((item, index) => (
-                    <ListItem key={index} sx={{ padding: 0, margin: 0 }}>
-                      <Typography
-                        color={item.valid ? "green" : "red"}
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          fontSize: "10px",
-                          margin: 0,
-                          padding: 0,
-                        }}
-                      >
-                        {item.valid ? "✔" : "✖"} {item.label}
-                      </Typography>
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-            }
-            open={tooltipOpen && validationCriteria.some((item) => !item.valid)} // Keep tooltip open if some criteria are not met
-            placement={isMobilee ? "bottom" : "left-start"}
-            arrow
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: isMobilee ? [0, -5] : [0, -5], // Larger vertical offset for mobile mode
-                  },
-                },
-              ],
-              sx: {
-                "& .MuiTooltip-tooltip": {
-                  backgroundColor: "#f5f5f5",
-                  color: "#293241",
-                },
-              },
-            }}
-          >
-            <TextField
+              {...register("password", { required: true })} // Use the register method here
               placeholder="Password"
               type={showPassword ? "text" : "password"}
-              name="signUpPassword"
-              value={signUpPassword}
-              onChange={(e) => {
-                setSignUpPassword(e.target.value);
-                setTooltipOpen(true); // Show tooltip while typing
-              }}
-              onBlur={() => {
-                setTooltipOpen(false); // Hide it when password is fully valid
-              }}
-              onFocus={() => {
-                setTooltipOpen(true); // Hide it when password is fully valid
-              }}
+              value={signInPassword}
+              onChange={(e) => setSignInPassword(e.target.value)}
+              required
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "25px",
@@ -719,114 +981,7 @@ const SignUp = () => {
                       }}
                     >
                       <LockIcon
-                        style={{
-                          color: "#ee6c4d",
-                          fontSize: 30,
-                          marginRight: 5,
-                        }}
-                      />
-                    </div>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Tooltip>
-
-          {/* Confirm Password field with tooltip */}
-          <Tooltip
-            title={
-              <Box sx={{ width: 180 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ fontSize: 13, fontWeight: "bold", color: "#293241" }}
-                >
-                  Password Requirements:
-                </Typography>
-                <List>
-                  {ConfirmValidationCriteria.map((item, index) => (
-                    <ListItem key={index} sx={{ padding: 0, margin: 0 }}>
-                      <Typography
-                        color={item.valid ? "green" : "red"}
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          fontSize: "10px",
-                          margin: 0,
-                          padding: 0,
-                        }}
-                      >
-                        {item.valid ? "✔" : "✖"} {item.label}
-                      </Typography>
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-            }
-            open={
-              ConfirmtooltipOpen &&
-              ConfirmValidationCriteria.some((item) => !item.valid)
-            } // Keep tooltip open if some criteria are not met
-            arrow
-            placement={isMobilee ? "bottom" : "left-start"} // Conditionally set the placement
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: isMobilee ? [0, -18] : [10, -5], // Larger vertical offset for mobile mode
-                  },
-                },
-              ],
-              sx: {
-                "& .MuiTooltip-tooltip": {
-                  backgroundColor: "#f5f5f5", // Set your desired background color here
-                  color: "#293241", // Optional: Set text color for better visibility
-                },
-              },
-            }}
-          >
-            <TextField
-              placeholder="Confirm Password"
-              type={showPassword ? "text" : "password"}
-              value={confirmPassword}
-              name="confirmPassword"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              onFocus={() => setConfirmTooltipOpen(true)} // Show tooltip on focus
-              onBlur={() => setConfirmTooltipOpen(false)} // Hide tooltip on blur
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: "25px",
-                  width: "320px",
-                  height: "37px",
-                  margin: "10px 0",
-                  border: "1px solid gray",
-                  "& fieldset": { border: "none" },
-                },
-                "& .MuiInputBase-root": {
-                  "&.Mui-focused": { borderColor: "gray" },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        border: "2px solid #ee6c4d",
-                        borderLeft: "none",
-                        borderTop: "none",
-                        borderBottom: "none",
-                        borderRadius: "10px 0 0 10px",
-                      }}
-                    >
-                      <EnhancedEncryptionIcon
-                        style={{
-                          color: "#ee6c4d",
-                          fontSize: 30,
-                          marginRight: 5,
-                        }}
+                        style={{ color: "#ee6c4d", fontSize: 30, marginRight: 5 }}
                       />
                     </div>
                   </InputAdornment>
@@ -844,272 +999,119 @@ const SignUp = () => {
                 ),
               }}
             />
-          </Tooltip>
-          <button
-            type="submit"
-            className="btn"
-            style={{ textTransform: "capitalize" }}
-          >
-            Sign Up
-          </button>
-
-          {/* Continue with Google button */}
-          <Stack
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            direction="row"
-          >
-            <div
-              style={{
-                border: "1px solid rgba(34, 60, 84, 0.397)",
-                width: 140,
-                margin: 10,
+      
+            {/*  */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between", // Adjust spacing between checkbox and link
+                width: "80%", // Adjust width as per the layout
               }}
-            ></div>
-            <span style={{ color: "#293241", fontWeight: "bold" }}> OR </span>
-            <div
-              style={{
-                border: "1px solid rgba(34, 60, 84, 0.397)",
-                width: 140,
-                margin: 10,
-              }}
-            ></div>
-          </Stack>
-          <GoogleLogin onSuccess={handleSuccess} onError={handleFailure} />
-        </form>
-        {/* end of sign up form  */}
-      </div>
-      <div className="form-container sign-up">
-        <form onSubmit={handleSubmit(onSubmit2)}>
-          <h1 style={{ color: "#293241" }}>Sign In</h1>
-
-          {/* Username or email field */}
-          <TextField
-            {...register("email", { required: true })} // Use the register method here
-            placeholder="Username or email"
-            type="text"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="off"
-            sx={{
-              "& input:-webkit-autofill": {
-                WebkitBoxShadow: "0 0 0 10px transparent inset", // Make the autofill background transparent
-                backgroundColor: "transparent",
-                WebkitTextFillColor: "#293241", // Maintain your desired text color
-                transition: "background-color 5000s ease-in-out 0s", // A trick to override autofill background
-              },
-              "& input:-webkit-autofill:focus, & input:-webkit-autofill:hover":
-                {
-                  backgroundColor: "transparent",
-                  WebkitBoxShadow: "0 0 0 10px transparent inset", // Keep it transparent on focus/hover
-                  transition: "background-color 5000s ease-in-out 0s", // Maintain the background color override
-                },
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "25px",
-                width: "320px",
-                height: "37px",
-                margin: "15px 0",
-                border: "1px solid gray",
-                "& fieldset": {
-                  border: "none", // Remove the default border
-                },
-              },
-              "& .MuiInputBase-root": {
-                "&.Mui-focused": {
-                  borderColor: "gray", // Remove focus color
-                },
-              },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "2px solid #ee6c4d",
-                      borderLeft: "none",
-                      borderTop: "none",
-                      borderBottom: "none",
-                      borderRadius: "10px 0 0 10px",
-                    }}
-                  >
-                    <PersonIcon
-                      style={{ color: "#ee6c4d", fontSize: 30, marginRight: 5 }}
+            >
+              {/* Remember Me Checkbox */}
+              <Box display="flex" alignItems="center" mt={1}>
+                {" "}
+                {/* Aligns the checkbox and label */}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      color="primary"
+                      sx={{
+                        transform: "scale(0.8)", // Adjust checkbox size
+                        "&.Mui-checked": {
+                          color: "#ee6c4d",
+                        },
+                      }}
                     />
-                  </div>
-                </InputAdornment>
-              ),
-            }}
-          />
-          {/* Sign in Password field */}
-          <TextField
-            {...register("password", { required: true })} // Use the register method here
-            placeholder="Password"
-            type={showPassword ? "text" : "password"}
-            value={signInPassword}
-            onChange={(e) => setSignInPassword(e.target.value)}
-            required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "25px",
-                width: "320px",
-                height: "37px",
-                border: "1px solid gray",
-                "& fieldset": { border: "none" },
-              },
-              "& .MuiInputBase-root": {
-                "&.Mui-focused": { borderColor: "gray" },
-              },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "2px solid #ee6c4d",
-                      borderLeft: "none",
-                      borderTop: "none",
-                      borderBottom: "none",
-                      borderRadius: "10px 0 0 10px",
-                    }}
-                  >
-                    <LockIcon
-                      style={{ color: "#ee6c4d", fontSize: 30, marginRight: 5 }}
-                    />
-                  </div>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleToggleShowPassword}
-                    edge="end"
-                    style={{ color: "gray" }}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          {/*  */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between", // Adjust spacing between checkbox and link
-              width: "80%", // Adjust width as per the layout
-            }}
-          >
-            {/* Remember Me Checkbox */}
-            <Box display="flex" alignItems="center" mt={1}>
-              {" "}
-              {/* Aligns the checkbox and label */}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    color="primary"
-                    sx={{
-                      transform: "scale(0.8)", // Adjust checkbox size
-                      "&.Mui-checked": {
-                        color: "#ee6c4d",
-                      },
-                    }}
-                  />
-                }
-                label="Remember Me"
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    fontSize: "13px", // Set font size for the label
-                    color: "#293241", // Set label color
-                    fontWeight: "bold",
-                  },
+                  }
+                  label="Remember Me"
+                  sx={{
+                    "& .MuiFormControlLabel-label": {
+                      fontSize: "13px", // Set font size for the label
+                      color: "#293241", // Set label color
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+              </Box>
+      
+              {/* Forget Your Password Link */}
+              <Link
+                to="/ForgotPassword" // Replace with your actual route
+                style={{
+                  textDecoration: "none",
+                  color: "#293241",
+                  fontSize: "13px",
+                  fontWeight: "bold",
                 }}
-              />
+              >
+                Forgot Password?
+              </Link>
             </Box>
-
-            {/* Forget Your Password Link */}
-            <Link
-              to="/ForgotPassword" // Replace with your actual route
-              style={{
-                textDecoration: "none",
-                color: "#293241",
-                fontSize: "13px",
-                fontWeight: "bold",
-              }}
-            >
-              Forgot Password?
-            </Link>
-          </Box>
-
-          <button
-            type="submit"
-            className="btn"
-            style={{ textTransform: "capitalize" }}
-          >
-            Sign In
-          </button>
-        </form>
-      </div>
-      <div className="toggle-container">
-        <div className="toggle">
-          <div className="toggle-panel toggle-left">
-            <h1>Welcome Back!</h1>
-            <p>
-              Don't have an account ? <br />
-              Register with your personal details to use all of the site
-              features
-            </p>
+      
             <button
-              className="hidden btn"
-              id="login"
-              onClick={handleLoginClick}
-              style={{ textTransform: "capitalize" }}
-            >
-              Sign Up
-            </button>
-          </div>
-          <div className="toggle-panel toggle-right">
-            <h1>Hello, Friend!</h1>
-            <p>
-              Do you have an account ? <br />
-              Enter your personal details to use all of the site features
-            </p>
-            <button
-              className="hidden btn"
-              id="register"
-              onClick={handleRegisterClick}
+              type="submit"
+              className="btn"
               style={{ textTransform: "capitalize" }}
             >
               Sign In
             </button>
+          </form>
+        </div>
+        <div className="toggle-container">
+          <div className="toggle">
+            <div className="toggle-panel toggle-left">
+              <h1>Welcome Back!</h1>
+              <p>
+                Don't have an account ? <br />
+                Register with your personal details to use all of the site
+                features
+              </p>
+              <button
+                className="hidden btn"
+                id="login"
+                onClick={handleLoginClick}
+                style={{ textTransform: "capitalize" }}
+              >
+                Sign Up
+              </button>
+            </div>
+            <div className="toggle-panel toggle-right">
+              <h1>Hello, Friend!</h1>
+              <p>
+                Do you have an account ? <br />
+                Enter your personal details to use all of the site features
+              </p>
+              <button
+                className="hidden btn"
+                id="register"
+                onClick={handleRegisterClick}
+                style={{ textTransform: "capitalize" }}
+              >
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={open}
+          autoHideDuration={3000}
           onClose={handleClose}
-          severity="info"
-          variant="filled"
-          sx={{ width: "100%" }}
         >
-          Account created successfully
-        </Alert>
-      </Snackbar>
+          <Alert
+            onClose={handleClose}
+            severity="info"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Account created successfully
+          </Alert>
+        </Snackbar>
+      </div>
     </div>
   );
 };
